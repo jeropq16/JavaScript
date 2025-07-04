@@ -1,0 +1,34 @@
+{
+  "productos": [
+    {
+      "nombre": "laptop",
+      "precio": 850000,
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "nombre": "Mouse",
+      "precio": 25000
+    },
+    {
+      "id": "4",
+      "nombre": "Keyboard",
+      "precio": 70000
+    },
+    {
+      "id": "5",
+      "nombre": "Tablet",
+      "precio": 550000
+    },
+    {
+      "id": "6",
+      "nombre": "Hearphones",
+      "precio": 35000
+    },
+    {
+      "id": "7",
+      "nombre": "Screen",
+      "precio": 85000
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Tareas</title>
+  <style>
+    /* Estilo general: oscuro y minimalista */
+    body {
+      background-color: #1e1e2f;
+      color: #f0f0f0;
+      font-family: 'Courier New', monospace;
+      padding: 40px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: bold;
+      color: #77dd77;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-bottom: 2px solid #77dd77;
+      background-color: transparent;
+      color: #f0f0f0;
+      font-size: 16px;
+      outline: none;
+    }
+
+    button {
+      background-color: #77dd77;
+      border: none;
+      border-radius: 50%;
+      width: 100px;
+      height: 50px;
+      font-weight: bold;
+      color: #1e1e2f;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #55cc55;
+    }
+
+    #lista-tareas {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .tarea {
+      background-color: #2c2c3f;
+      padding: 15px 20px;
+      border-left: 5px solid #77dd77;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s;
+      color: black;
+    }
+
+    .tarea.completada {
+      background-color: #444456;
+      border-left-color: #999;
+      color: #aaa;
+      text-decoration: line-through;
+      
+    }
+
+    .tarea button {
+      border-radius: 8px;
+      font-size: 14px;
+      padding: 5px 8px;
+      width: auto;
+      height: auto;
+    }
+
+    .tarea button.eliminar {
+      background-color: #ff6b6b;
+      color: #1e1e2f;
+    }
+
+    .tarea button.eliminar:hover {
+      background-color: #e84141;
+    }
+
+    .tarea button.marcar {
+      background-color: #77dd77;
+      color: #1e1e2f;
+    }
+
+    .tarea button.marcar:hover {
+      background-color: #55cc55;
+    }
+  </style>
+</head>
+<body>
+
+  <h1> Mi lista de tareas</h1>
+
+  <form id="formulario-tarea">
+    <input type="text" id="descripcion" placeholder="Escribe tu tarea" required>
+    <button type="submit">Agregar</button>
+  </form>
+
+  <div id="lista-tareas">
+    <!-- Las tareas aparecerán aquí -->
+  </div>
+  <script>
+
+  // Paso 1: Definimos el array de tareas
+  const tareas = [];
+
+  // Paso 2: Capturamos el formulario y el contenedor de tareas
+  const formulario = document.getElementById('formulario-tarea');
+  const inputDescripcion = document.getElementById('descripcion');
+  const contenedorTareas = document.getElementById('lista-tareas');
+
+  // Paso 3: Escuchamos el submit del formulario
+  formulario.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const descripcion = inputDescripcion.value.trim();
+    if (descripcion !== '') {
+      const nuevaTarea = {
+        descripcion: descripcion,
+        completada: false
+      };
+
+      tareas.push(nuevaTarea);
+      inputDescripcion.value = ''; // Limpiar campo
+      mostrarTareas();
+    }
+  });
+
+  // Paso 4: Función para mostrar tareas
+ function mostrarTareas() {
+  contenedorTareas.innerHTML = 'Aquí van las tareas';
+
+  tareas.forEach((tarea, index) => {
+    const div = document.createElement('div');
+    div.className = 'tarea';
+
+    // Estilo según si está completada
+    div.style.backgroundColor = tarea.completada ? '#d4edda' : '#fff';
+    div.style.textDecoration = tarea.completada ? 'line-through' : 'none';
+
+    // Contenido HTML de la tarea
+    div.innerHTML = `
+      ${tarea.descripcion}
+      <button onclick="marcarCompletada(${index})">✔</button>
+      <button onclick="eliminarTarea(${index})">🗑️</button>`
+    ;
+
+    contenedorTareas.append(div); // Agregar tarea al contenedor
+  });
+}
+
+  // Paso 5: Marcar como completada
+  function marcarCompletada(index) {
+    tareas[index].completada = true;
+    mostrarTareas();
+  }
+
+  function eliminarTarea(index) {
+    tareas.splice(index, 1);
+    mostrarTareas();
+  } 
+  </script>
+</body>
+</html>
